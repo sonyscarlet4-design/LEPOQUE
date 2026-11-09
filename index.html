@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boutique Vintage - Catálogo & Bitácora</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <!-- Alerta Toast -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="#" class="brand">
+      <span class="brand-title">L'ÉPOQUE</span>
+      <span class="brand-sub">VINTAGE CLOTHING ARCHIVE</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#catalogo">Catálogo</a></li>
+      <li><a href="#bitacora">Bitácora</a></li>
+      <li>
+        <button class="cart-btn" id="openCartBtn">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="cart-badge" id="cartBadge">0</span>
+        </button>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Hero Banner -->
+  <header class="hero">
+    <div class="hero-content">
+      <span class="hero-tag">COLECCIÓN EXCLUSIVA</span>
+      <h1>Elegancia que atraviesa el tiempo</h1>
+      <p>Prendas únicas seleccionadas a mano, curaduría de archivo y piezas de época con historia propia.</p>
+      <a href="#catalogo" class="btn-primary">Explorar Colección</a>
+    </div>
+  </header>
+
+  <!-- Contenedor Principal -->
+  <main class="main-container">
+    
+    <!-- Sección Catálogo -->
+    <section id="catalogo" class="section">
+      <div class="section-header">
+        <h2>Catálogo de Selección</h2>
+        <p>Piezas auténticas restauradas y en estado impecable</p>
+      </div>
+
+      <!-- Filtros DOM -->
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="todos">Todos</button>
+        <button class="filter-btn" data-filter="abrigos">Abrigos & Sacos</button>
+        <button class="filter-btn" data-filter="vestidos">Vestidos</button>
+        <button class="filter-btn" data-filter="accesorios">Accesorios</button>
+      </div>
+
+      <!-- Grid de Productos -->
+      <div class="products-grid" id="productsGrid"></div>
+    </section>
+
+    <!-- Sección Bitácora / Historias -->
+    <section id="bitacora" class="section bitacora-section">
+      <div class="section-header">
+        <h2>Bitácora de Estilo & Archivo</h2>
+        <p>Historias de confección, notas de época y guía de conservación</p>
+      </div>
+
+      <div class="bitacora-grid">
+        <article class="bitacora-card">
+          <div class="bitacora-img" style="background-image: url('https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=600&q=80');"></div>
+          <div class="bitacora-info">
+            <span class="bitacora-date">10 NOV, 2026 • NOTAS DE CONSERVACIÓN</span>
+            <h3>El arte de conservar el terciopelo y la lana virgen</h3>
+            <p>Descubre los hábitos esenciales de almacenamiento sin químicos para mantener la fibra natural con aroma y textura original durante décadas.</p>
+          </div>
+        </article>
+
+        <article class="bitacora-card">
+          <div class="bitacora-img" style="background-image: url('https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=600&q=80');"></div>
+          <div class="bitacora-info">
+            <span class="bitacora-date">02 NOV, 2026 • HISTORIA DE ÉPOCA</span>
+            <h3>Siluetas de los años 70: La revolución de las solapas anchas</h3>
+            <p>Un recorrido por el patronaje clásico en abrigos de corte cruzado que definieron una década de elegancia urbana e intelectual.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Sidebar / Modal del Carrito -->
+  <div class="cart-drawer-overlay" id="cartOverlay"></div>
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <h3>Tu Bolsa de Compra</h3>
+      <button class="close-cart-btn" id="closeCartBtn">&times;</button>
+    </div>
+    <div class="cart-body" id="cartBody">
+      <p class="empty-cart-msg">Tu bolsa de compra está vacía.</p>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-subtotal">
+        <span>Subtotal:</span>
+        <strong id="cartSubtotal">0 Bs.</strong>
+      </div>
+      <button class="btn-primary btn-full" id="btnProceedCheckout">Procesar Orden</button>
+    </div>
+  </aside>
+
+  <!-- Modal de Formulario de Compra -->
+  <div class="modal-overlay" id="checkoutModal">
+    <div class="modal-card">
+      <h3>Datos de Envío & Confirmación</h3>
+      <p style="font-size:0.85rem; color:var(--vintage-muted); margin-bottom: 1rem;">Ingresa tus datos para generar el comprobante de compra</p>
+      
+      <form id="checkoutForm">
+        <div class="form-group">
+          <label for="custName">Nombre Completo</label>
+          <input type="text" id="custName" class="form-input" required placeholder="Ej. Luciana Castillo">
+        </div>
+        <div class="form-group">
+          <label for="custPhone">Teléfono / WhatsApp</label>
+          <input type="tel" id="custPhone" class="form-input" required placeholder="Ej. 75273771">
+        </div>
+        <div class="form-group">
+          <label for="custCity">Dirección de Entrega</label>
+          <input type="text" id="custCity" class="form-input" required placeholder="Zona, Calle y Nro. de domicilio">
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" id="btnCancelCheckout">Cancelar</button>
+          <button type="submit" class="btn-primary">Continuar a Confirmación</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal de Cuenta Regresiva de 10 Segundos -->
+  <div class="modal-overlay" id="timerModal">
+    <div class="modal-card text-center">
+      <i class="fa-solid fa-clock-rotate-left timer-icon"></i>
+      <h3>Confirmando Orden</h3>
+      <p style="font-size:0.85rem; color:var(--vintage-muted);">Tienes 10 segundos para revisar los datos antes del envío a la boutique:</p>
+      
+      <div class="timer-display" id="timerDisplay">10s</div>
+
+      <div class="summary-box">
+        <p><strong>Cliente:</strong> <span id="sumName"></span></p>
+        <p><strong>Dirección:</strong> <span id="sumAddress"></span></p>
+        <p><strong>Total a Pagar:</strong> <span id="sumTotal" style="color:var(--vintage-burgundy); font-weight:700;"></span></p>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-secondary" id="btnAbortTimer">Cancelar</button>
+        <button class="btn-primary" id="btnConfirmNow">Confirmar Ahora</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>© 2026 L'ÉPOQUE VINTAGE ARCHIVE • Piezas de Colección Finitas</p>
+  </footer>
+
+  <script src="index.js"></script>
+</body>
+</html>
