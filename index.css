@@ -16,6 +16,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -139,7 +140,7 @@ body {
   color: rgba(255, 255, 255, 0.9);
 }
 
-/* Botones Globale */
+/* Botones Globales */
 .btn-primary {
   background: var(--vintage-burgundy);
   color: #fff;

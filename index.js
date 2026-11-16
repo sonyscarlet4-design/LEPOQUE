@@ -204,16 +204,17 @@ document.getElementById('btnConfirmNow').addEventListener('click', () => {
 function executeFinalPurchase() {
     timerModal.classList.remove('active');
 
-    // Construir la lista de productos de forma limpia
+    // Construir la lista de productos de forma limpia y corregida
     let itemsList = "";
     activeOrderData.items.forEach(i => {
-        itemsList += `- ${i.title} (x${i.qty}) - ${i.price * i.qty} Bs.\n`;
+        const subtotalItem = i.price * i.qty;
+        itemsList += `- ${i.title} (x${i.qty}) - ${subtotalItem} Bs.\n`;
     });
 
     const targetWhatsApp = "59175273771";
     
-    // Mensaje con texto plano estándar para evitar errores de codificación
-    const message = `Hola L'Epoque Vintage, deseo confirmar la compra de la siguiente orden:\n\n- Cliente: ${activeOrderData.name}\n- Telefono: ${activeOrderData.phone}\n- Direccion: ${activeOrderData.address}\n\n- Detalle de Prendas:\n${itemsList}\n- TOTAL COMPRA: ${activeOrderData.total} Bs.`;
+    // Mensaje estructurado de forma correcta con template literals
+    const message = `Hola L'Epoque Vintage, deseo confirmar la compra de la siguiente orden:\n\nCliente: ${activeOrderData.name}\nTelefono: ${activeOrderData.phone}\nDireccion: ${activeOrderData.address}\n\nDetalle de Prendas:\n${itemsList}\nTOTAL COMPRA: ${activeOrderData.total}`;
 
     showToast("Compra confirmada. Redirigiendo...");
 
@@ -222,7 +223,6 @@ function executeFinalPurchase() {
     updateCartState();
 
     setTimeout(() => {
-        // Codifica el mensaje de forma segura para la URL
         const encodedMessage = encodeURIComponent(message);
         window.open(`https://wa.me/${targetWhatsApp}?text=${encodedMessage}`, '_blank');
     }, 800);
